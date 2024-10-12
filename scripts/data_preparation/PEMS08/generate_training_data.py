@@ -36,19 +36,6 @@ def generate_data(args: argparse.Namespace):
     # read data
     data = np.load(data_file_path)["data"]
     data = data[..., target_channel]
-    #
-    # ''''''
-    # arr_shape=data.shape
-    # # 初始化新的数组D，形状与arr相同
-    # D = np.zeros(arr_shape)
-    # for i in range(1, arr_shape[0] - 1):
-    #     D[i, :, 0] = ((data[i, :, 0] - data[i - 1, :, 0]) + ((data[i + 1, :, 0] - data[i - 1, :, 0]) / 2)) / 2
-    # # 处理第一个和最后一个数据点
-    # D[0, :, 0] = D[1, :, 0]  # 使用第二个数据点的导数来替代第一个数据点的导数
-    # D[-1, :, 0] = D[-2, :, 0]  # 使用倒数第二个数据点的导数来替代最后一个数据点的导数
-    # # 打印结果
-    # print("raw time series shape: {0}".format(D.shape))
-    # ''''''
 
     print("raw time series shape: {0}".format(data.shape))
 
@@ -76,12 +63,6 @@ def generate_data(args: argparse.Namespace):
     scaler = standard_transform
     data_norm = scaler(data, output_dir, train_index, history_seq_len, future_seq_len, norm_each_channel=norm_each_channel)
 
-    data_norm1=data_norm[:12,:5,]
-    data_norm1=data_norm1.squeeze(-1)
-    # 将数据转换为DataFrame
-    df = pd.DataFrame(data_norm1)
-    # 保存为Excel文件
-    df.to_excel("data_norm1.xlsx", index=False)
 
     # add temporal feature
     feature_list = [data_norm]
