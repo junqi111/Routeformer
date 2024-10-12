@@ -36,18 +36,7 @@ def generate_data(args: argparse.Namespace):
     # read data
     data = np.load(data_file_path)["data"]
     data = data[..., target_channel]
-    # ''''''
-    # arr_shape=data.shape
-    # # 初始化新的数组D，形状与arr相同
-    # D = np.zeros(arr_shape)
-    # for i in range(1, arr_shape[0] - 1):
-    #     D[i, :, 0] = ((data[i, :, 0] - data[i - 1, :, 0]) + ((data[i + 1, :, 0] - data[i - 1, :, 0]) / 2)) / 2
-    # # 处理第一个和最后一个数据点
-    # D[0, :, 0] = D[1, :, 0]  # 使用第二个数据点的导数来替代第一个数据点的导数
-    # D[-1, :, 0] = D[-2, :, 0]  # 使用倒数第二个数据点的导数来替代最后一个数据点的导数
-    # # 打印结果
-    # print("raw time series shape: {0}".format(D.shape))
-    ''''''
+
     print("raw time series shape: {0}".format(data.shape))
 
     # split data
