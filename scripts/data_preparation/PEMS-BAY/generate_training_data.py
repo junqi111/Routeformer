@@ -93,7 +93,6 @@ def generate_data(args: argparse.Namespace):
         doy = (df.index.dayofyear - 1) / 366 # df.index.month starts from 1. We need to minus 1 to make it start from 0.
         doy_tiled = np.tile(doy, [1, n, 1]).transpose((2, 1, 0))
         feature_list.append(doy_tiled)
-    feature_list.append(D)
     processed_data = np.concatenate(feature_list, axis=-1)
 
     # save data
