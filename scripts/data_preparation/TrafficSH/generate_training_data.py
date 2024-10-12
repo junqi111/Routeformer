@@ -38,12 +38,6 @@ def generate_data(args: argparse.Namespace):
     data = np.load(data_file_path)
     print(data.files)
     data = np.load(data_file_path)["data"]
-    #l,n,f
-    # # 按6个时间步（30分钟）进行降采样，并求和
-    # new_length = data.shape[0] // 6  # 计算降采样后的时间步长数量
-    # data_downsampled = data[:new_length * 6].reshape(new_length, 6, -1).sum(axis=1)
-    # data = np.expand_dims(data_downsampled, axis=-1)
-    # data=data.transpose(1,0,2)   #105216 /35088
     data = np.expand_dims(data, axis=-1)
     data = data[..., target_channel]
     ''''''
@@ -105,20 +99,16 @@ def generate_data(args: argparse.Namespace):
         pickle.dump(data, f)
     # Save adjacency matrix from .npy to .pkl
     if os.path.exists(args.graph_file_path):
-        # 读取 .npy 并保存为 .pkl
-        npy_file = args.graph_file_path.replace(".pkl", ".npy")  # 假设 .npy 文件路径
+        npy_file = args.graph_file_path.replace(".pkl", ".npy")  # 
         pkl_file = output_dir + "/adj_mx.pkl"
         save_adj_to_pkl(npy_file, pkl_file)
     else:
-        # 如果不存在 .npy 文件，执行其他操作（例如生成或提示错误）
         print("Error: adjacency matrix .npy file not found.")
 
 def save_adj_to_pkl(npy_file, pkl_file):
     """Load adjacency matrix from .npy file and save as .pkl file."""
-    # 读取邻接矩阵
     adj_mx = np.load(npy_file)
 
-    # 将邻接矩阵存为 .pkl 文件
     with open(pkl_file, "wb") as f:
         pickle.dump(adj_mx, f)
 
