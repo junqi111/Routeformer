@@ -273,13 +273,6 @@ class Routeformer(nn.Module):
         self.spatial_embedding_dim = spatial_embedding_dim
         self.model_dim = (model_dim
                           )
-        # self.model_dim = (
-        #     input_embedding_dim
-        #     + tod_embedding_dim
-        #     + dow_embedding_dim
-        #     + dow_embedding_dim
-        #     + spatial_embedding_dim
-        # )
         self.num_heads = num_heads
         self.num_layers = num_layers
         self.use_mixed_proj = use_mixed_proj
@@ -358,11 +351,8 @@ class Routeformer(nn.Module):
             dow_emb = self.dow_embedding(
                 dow.long()
             )  # (batch_size, in_steps, num_nodes, dow_embedding_dim)
-            features.append(dow_emb)  # 以上两个都是周期Ep
-        if self.emb_flag:  # 不要
-            # spatial_emb = self.node_emb.expand(
-            #     batch_size,self.in_steps,*self.node_emb.shape
-            # )
+            features.append(dow_emb)  
+        if self.emb_flag:  
             spatial_emb = self.node_emb.expand(
                 size=(batch_size, *self.node_emb.shape)
             )
